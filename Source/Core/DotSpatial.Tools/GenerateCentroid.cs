@@ -77,14 +77,15 @@ namespace DotSpatial.Tools
             // Validates the input and output data
             if (input1 == null || output == null) return false;
 
-            bool multPoint = false;
-            foreach (IFeature f1 in input1.Features)
-            {
-                if (f1.Geometry.NumGeometries > 1)
-                {
-                    multPoint = true;
-                }
-            }
+            bool multPoint = input1.Features.Where(f => f.Geometry.NumGeometries > 1).Any();
+            //foreach (IFeature f1 in input1.Features)
+            //{
+            //    if (f1.Geometry.NumGeometries > 1)
+            //    {
+            //        multPoint = true;
+            //        break;
+            //    }
+            //}
 
             output.FeatureType = multPoint == false ? FeatureType.Point : FeatureType.MultiPoint;
 
